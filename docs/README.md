@@ -83,7 +83,7 @@ ___
 | `canGoBack` | `Readable`<`boolean`\> | Store that contains true if goBack can be invoked, false otherwise. |
 | `navigating` | `Readable`<`boolean`\> | Store that contains true if the Navigator is handling a navigation request, false otherwise. |
 | `swiping` | `Readable`<`boolean`\> | Store that contains true if a swipe gesture is in progress. |
-| `goBack` | () => `Promise`<`void`\> | Goes to the previous page. If the stack contains only one page this function will throw. |
+| `goBack` | (`returnValue?`: `unknown`) => `Promise`<`void`\> | Goes to the previous page. If the stack contains only one page this function will throw. |
 | `navigate` | <TProps\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`TProps`\>, `props`: `TProps`) => `Promise`<`void`\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`Record`<`string`, `unknown`\>\>) => `Promise`<`void`\> | Opens a new page, pushing it to the top of the stack and pausing the current one. |
 | `openModal` | <TProps\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`TProps`\>, `props`: `TProps`) => `Promise`<`void`\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`Record`<`string`, `unknown`\>\>) => `Promise`<`void`\> | Opens a new page showing it as a modal, pushing it to the top of the stack and pausing the current one. |
 

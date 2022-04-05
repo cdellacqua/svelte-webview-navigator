@@ -62,7 +62,7 @@ export type NavigationUtils = {
 	/**
 	 * Goes to the previous page. If the stack contains only one page this function will throw.
 	 */
-	goBack: () => Promise<void>;
+	goBack: (returnValue?: unknown) => Promise<void>;
 	/**
 	 * Store that contains true if goBack can be invoked, false otherwise.
 	 */

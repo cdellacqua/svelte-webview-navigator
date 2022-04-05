@@ -131,6 +131,42 @@ or rejects if there was an error (e.g. goBack was called even if canGoBack was f
 The StackNavigator component has also a `on:error` event to which you can attach a listener that will receive all
 the errors that can occur during navigation.
 
+### Returning values to previous views
+
+Adjacent stack elements can communicate by combining onResume and goBack components. For example,
+you could have a component that opens another one as a modal and when that modal closes
+you want to return a value representing some sort of user choice. To do that, on the first
+component you would register an onResume callback that accepts a parameter, while
+on the second component (the one showed as a modal) you would call goBack passing a
+value to it.
+
+Here is the same example as code:
+
+```svelte
+<script lang="ts">
+	import SomeModal from './SomeModal.svelte';
+	import {useNavigation} from 'svelte-webview-navigator';
+	const {openModal, onResume} = useNavigation();
+
+	onResume((returnValue?: string) => {
+		alert('resumed with value ' + returnValue);
+	});
+</script>
+
+// Primary page
+<button on:click={() => openModal(SomeModal)}>open modal</button>
+```
+
+```svelte
+<script lang="ts">
+	import {useNavigation} from 'svelte-webview-navigator';
+	const {goBack} = useNavigation();
+</script>
+
+// SomeModal.svelte
+<button on:click={() => goBack('hello!')}>close modal</button>
+```
+
 ### Hardware back button
 
 To handle the hardware back button in your framework of choice you can manually call the `goBack` function

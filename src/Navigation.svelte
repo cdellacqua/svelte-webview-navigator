@@ -24,6 +24,9 @@
 			})}>Go to Notifications</button
 	>
 	<button disabled={!$canGoBack} on:click={() => goBack()}>Go back</button>
+	<button disabled={!$canGoBack} on:click={() => goBack(new Date())}
+		>Go back returning a value</button
+	>
 </div>
 
 <div style="padding: 2rem 0">
