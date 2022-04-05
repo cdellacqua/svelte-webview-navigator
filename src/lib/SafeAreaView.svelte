@@ -1,6 +1,15 @@
 <script lang="ts">
+	/**
+	 * Reference to the root element of this component.
+	 */
 	export let ref: HTMLDivElement | undefined = undefined;
+	/**
+	 * Additional classes for the root element of this component.
+	 */
 	export let className: string | undefined = undefined;
+	/**
+	 * Additional styles for the root element of this component.
+	 */
 	export let style: string | undefined = undefined;
 </script>
 

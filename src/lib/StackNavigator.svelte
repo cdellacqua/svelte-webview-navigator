@@ -13,21 +13,63 @@
 	import {isPortrait, modalTransitions, premadeTransitions} from './_premade-transitions';
 	import {sleep} from './_utils';
 
-	export let ref: HTMLDivElement | undefined = undefined;
+	/**
+	 * Component that represents the bottom of the stack. It will
+	 * be the first component that gets mounted once the navigator
+	 * is ready.
+	 */
 	export let main: SvelteComponentConstructor;
+	/**
+	 * An object containing a transition for the page in front of the user and the page behind it.
+	 */
 	export let transitions: TransitionFunctions = premadeTransitions.slide;
+	/**
+	 * An easing function u = f(t) where both t and u are numbers from 0 to 1.
+	 */
 	export let transitionEasing: (t: number) => number = expoInOut;
+	/**
+	 * The duration of the transition in milliseconds.
+	 */
 	export let transitionDuration = 600;
-
+	/**
+	 * Reference to the root element of this component.
+	 */
+	export let ref: HTMLDivElement | undefined = undefined;
+	/**
+	 * Additional classes for the root element of this component.
+	 */
 	export let className: string | undefined = undefined;
+	/**
+	 * Additional styles for the root element of this component.
+	 */
 	export let style: string | undefined = undefined;
-
+	/**
+	 * Whether the swipe gestures are enabled or disabled.
+	 */
 	export let enableSwipeGestures = true;
+	/**
+	 * Portion of the left-most part of the screen that should be listening for swipe gestures.
+	 */
 	export let swipeGestureSensitiveAreaWidth = 0.05;
+	/**
+	 * Portion of the upper-most part of the screen that should be listening for swipe gestures.
+	 */
 	export let swipeGestureSensitiveAreaHeight = 1;
-	export let swipeGestureThreshold = 0.4;
+	/**
+	 * Number of pixels per millisecond that should trigger a call to the goBack function.
+	 */
 	export let swipeGestureSpeedThresholdPixelsPerMillisecond = 0.1;
+	/**
+	 * When the user drags the current page crossing this threshold, goBack is called regardless of the speed of the gesture.
+	 */
+	export let swipeGestureThreshold = 0.4;
+	/**
+	 * Number of samples used to determine the speed of the swipe gesture.
+	 */
 	export let swipeGestureMaxSpeedSamples = 100;
+	/**
+	 * Minimum distance that the finger has to travel to activate the swipe gesture.
+	 */
 	export let swipeGestureMinDistance = 50;
 
 	const navigationQueue = new PQueue({concurrency: 1});

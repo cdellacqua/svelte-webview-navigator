@@ -116,14 +116,14 @@ parameters (a component or a component and its props), but the presentation is d
 
 Here is a complete reference of the functions and stores provided by `useNavigation`:
 
-| name       | type     | description                                                                                 |
-| ---------- | -------- | ------------------------------------------------------------------------------------------- |
-| navigate   | function | Opens a new page, pushing it to the top of the stack                                        |
-| openModal  | function | Same as navigate, but presents the new page as a modal                                      |
-| goBack     | function | Goes to the previous page                                                                   |
-| canGoBack  | store    | Store that contains true if goBack can be invoked, false otherwise                          |
-| navigating | store    | Store that contains true if the Navigator is handling a navigation request, false otherwise |
-| swiping    | store    | Store that contains true if a swipe gesture is in progress                                  |
+| name       | type     | description                                                                                  |
+| ---------- | -------- | -------------------------------------------------------------------------------------------- |
+| navigate   | function | Opens a new page, pushing it to the top of the stack and pausing the current one.            |
+| openModal  | function | Same as navigate, but presents the new page as a modal.                                      |
+| goBack     | function | Goes to the previous page. If the stack contains only one page this function will throw.     |
+| canGoBack  | store    | Store that contains true if goBack can be invoked, false otherwise.                          |
+| navigating | store    | Store that contains true if the Navigator is handling a navigation request, false otherwise. |
+| swiping    | store    | Store that contains true if a swipe gesture is in progress.                                  |
 
 All navigation functions return a Promise that resolves once the navigation is complete (i.e. the transition has ended),
 or rejects if there was an error (e.g. goBack was called even if canGoBack was false).
@@ -168,13 +168,13 @@ the `@capacitor/app` plugin (details in the [docs here](https://capacitorjs.com/
 
 You can customize the appearance of the navigator by setting the following CSS variables:
 
-| variable                                 | description                                                                                                    | default            |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------ |
-| --svelte-stack-nav-page-background       | The background of the current page.                                                                            | #fff               |
-| --svelte-stack-nav-modal-offset-top      | The distance from the safe area top border and the modal top border.                                           | 30px               |
-| --svelte-stack-nav-modal-border-radius   | The border radius of the modal window                                                                          | 30px               |
-| --svelte-stack-nav-modal-landscape-width | The width of the modal window when the device is in landscape mode                                             | 68%                |
-| --svelte-stack-nav-overlay-background    | The page overlay color. This overlay is used to darken the content of a page when transitioning to another one | rgba(0, 0, 0, 0.2) |
+| variable                                 | description                                                                                                     | default            |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------ |
+| --svelte-stack-nav-page-background       | The background of the current page.                                                                             | #fff               |
+| --svelte-stack-nav-modal-offset-top      | The distance from the safe area top border and the modal top border.                                            | 30px               |
+| --svelte-stack-nav-modal-border-radius   | The border radius of the modal window.                                                                          | 30px               |
+| --svelte-stack-nav-modal-landscape-width | The width of the modal window when the device is in landscape mode.                                             | 68%                |
+| --svelte-stack-nav-overlay-background    | The page overlay color. This overlay is used to darken the content of a page when transitioning to another one. | rgba(0, 0, 0, 0.2) |
 
 You can pass those variables directly to the StackNavigator `style` property (e.g. `<StackNavigator style="--svelte-stack-nav-page-background: red" ... />`) or you can set them in your stylesheet
 (e.g. `:root { --svelte-stack-nav-page-background: red }`).
@@ -208,11 +208,11 @@ You can also customize the easing and duration of the transition by passing
 the `transitionEasing` and `transitionDuration` properties. The easing is
 can be imported from `svelte/easing`, while the duration is a number in milliseconds.
 
-| prop               | description                                                                                | default                  |
-| ------------------ | ------------------------------------------------------------------------------------------ | ------------------------ |
-| transitions        | An object containing a transition for the page in front of the user and the page behind it | premadeTransitions.slide |
-| transitionEasing   | An easing function u = f(t) where both t and u are numbers from 0 to 1                     | expoInOut                |
-| transitionDuration | The duration of the transition in milliseconds                                             | 600                      |
+| prop               | description                                                                                 | default                  |
+| ------------------ | ------------------------------------------------------------------------------------------- | ------------------------ |
+| transitions        | An object containing a transition for the page in front of the user and the page behind it. | premadeTransitions.slide |
+| transitionEasing   | An easing function u = f(t) where both t and u are numbers from 0 to 1.                     | expoInOut                |
+| transitionDuration | The duration of the transition in milliseconds.                                             | 600                      |
 
 If you want to create your custom transition you can use the following template:
 
@@ -234,12 +234,12 @@ to reverse the original transition.
 The StackNavigator supports the swipe back and swipe down gestures out
 of the box. If you want to tailor the swipe interaction you can tweak the following properties:
 
-| prop                                           | description                                                                                                           | default   |
-| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------- |
-| enableSwipeGestures                            | Whether the swipe gestures are enabled or disabled                                                                    | true      |
-| swipeGestureSensitiveAreaWidth                 | Portion of the left-most part of the screen that should be listening for swipe gestures                               | 0.05 (5%) |
-| swipeGestureSensitiveAreaHeight                | Portion of the upper-most part of the screen that should be listening for swipe gestures                              | 1 (100%)  |
-| swipeGestureSpeedThresholdPixelsPerMillisecond | Number of pixels per millisecond that should trigger a call to the goBack function                                    | 0.1       |
-| swipeGestureThreshold                          | When the user drags the current page crossing this threshold, goBack is called regardless of the speed of the gesture | 0.4 (40%) |
-| swipeGestureMaxSpeedSamples                    | Number of samples used to determine the speed of the swipe gesture                                                    | 100       |
-| swipeGestureMinDistance                        | Minimum distance that the finger has to travel to activate the swipe gesture                                          | 50        |
+| prop                                           | description                                                                                                            | default   |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------- |
+| enableSwipeGestures                            | Whether the swipe gestures are enabled or disabled.                                                                    | true      |
+| swipeGestureSensitiveAreaWidth                 | Portion of the left-most part of the screen that should be listening for swipe gestures.                               | 0.05 (5%) |
+| swipeGestureSensitiveAreaHeight                | Portion of the upper-most part of the screen that should be listening for swipe gestures.                              | 1 (100%)  |
+| swipeGestureSpeedThresholdPixelsPerMillisecond | Number of pixels per millisecond that should trigger a call to the goBack function                                     | 0.1       |
+| swipeGestureThreshold                          | When the user drags the current page crossing this threshold, goBack is called regardless of the speed of the gesture. | 0.4 (40%) |
+| swipeGestureMaxSpeedSamples                    | Number of samples used to determine the speed of the swipe gesture.                                                    | 100       |
+| swipeGestureMinDistance                        | Minimum distance that the finger has to travel to activate the swipe gesture.                                          | 50        |

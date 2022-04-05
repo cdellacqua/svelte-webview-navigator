@@ -1,11 +1,21 @@
 <script lang="ts">
 	import ScrollView from './ScrollView.svelte';
 
-	export let style: string | undefined = undefined;
+	/**
+	 * Reference to the root element of this component.
+	 */
+	export let ref: HTMLDivElement | undefined = undefined;
+	/**
+	 * Additional classes for the root element of this component.
+	 */
 	export let className: string | undefined = undefined;
+	/**
+	 * Additional styles for the root element of this component.
+	 */
+	export let style: string | undefined = undefined;
 </script>
 
-<ScrollView {style} {className}>
+<ScrollView {style} {className} bind:ref>
 	<div class="safe-area">
 		<slot />
 	</div>

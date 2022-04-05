@@ -58,18 +58,18 @@ Renames and re-exports [StackNavigator](classes/StackNavigator.md)
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `canGoBack` | `Readable`<`boolean`\> |
-| `navigating` | `Readable`<`boolean`\> |
-| `swiping` | `Readable`<`boolean`\> |
-| `goBack` | () => `Promise`<`void`\> |
-| `navigate` | <TProps\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`TProps`\>, `props`: `TProps`) => `Promise`<`void`\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`Record`<`string`, `unknown`\>\>) => `Promise`<`void`\> |
-| `openModal` | <TProps\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`TProps`\>, `props`: `TProps`) => `Promise`<`void`\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`Record`<`string`, `unknown`\>\>) => `Promise`<`void`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `canGoBack` | `Readable`<`boolean`\> | Store that contains true if goBack can be invoked, false otherwise. |
+| `navigating` | `Readable`<`boolean`\> | Store that contains true if the Navigator is handling a navigation request, false otherwise. |
+| `swiping` | `Readable`<`boolean`\> | Store that contains true if a swipe gesture is in progress. |
+| `goBack` | () => `Promise`<`void`\> | Goes to the previous page. If the stack contains only one page this function will throw. |
+| `navigate` | <TProps\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`TProps`\>, `props`: `TProps`) => `Promise`<`void`\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`Record`<`string`, `unknown`\>\>) => `Promise`<`void`\> | Opens a new page, pushing it to the top of the stack and pausing the current one. |
+| `openModal` | <TProps\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`TProps`\>, `props`: `TProps`) => `Promise`<`void`\>(`target`: [`SvelteComponentConstructor`](README.md#sveltecomponentconstructor)<`Record`<`string`, `unknown`\>\>) => `Promise`<`void`\> | Opens a new page showing it as a modal, pushing it to the top of the stack and pausing the current one. |
 
 #### Defined in
 
-src/lib/_types.ts:33
+[src/lib/_types.ts:33](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_types.ts#L33)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-src/lib/_types.ts:4
+[src/lib/_types.ts:4](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_types.ts#L4)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-src/lib/_types.ts:25
+[src/lib/_types.ts:25](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_types.ts#L25)
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 #### Defined in
 
-src/lib/_types.ts:26
+[src/lib/_types.ts:26](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_types.ts#L26)
 
 ## Variables
 
@@ -166,7 +166,7 @@ src/lib/_types.ts:26
 
 #### Defined in
 
-src/lib/_premade-transitions.ts:4
+[src/lib/_premade-transitions.ts:4](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_premade-transitions.ts#L4)
 
 ## Functions
 
@@ -174,13 +174,15 @@ src/lib/_premade-transitions.ts:4
 
 ▸ **mapRatio**(`ratio`, `min`, `max`): `number`
 
+Linearly map a number between 0 and 1 to a number between min and max.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `ratio` | `number` |
-| `min` | `number` |
-| `max` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `ratio` | `number` | a number between 0 and 1. |
+| `min` | `number` | the value that is returned when ratio is 0. |
+| `max` | `number` | the value that is returned when ratio is 1. |
 
 #### Returns
 
@@ -188,7 +190,7 @@ src/lib/_premade-transitions.ts:4
 
 #### Defined in
 
-src/lib/_transition-utils.ts:1
+[src/lib/_transition-utils.ts:8](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_transition-utils.ts#L8)
 
 ___
 
@@ -196,11 +198,14 @@ ___
 
 ▸ **onPause**(`callback`): `void`
 
+Attach a callback to the pause event in the component lifecycle, i.e. when
+the component is moved behind another one in the stack.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `callback` | () => `unknown` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `callback` | () => `unknown` | a callback that will be invoked when a forward navigation event occurs from the currently visible component to another one. If the callback returns a Promise, the navigation will wait for it to resolve before starting the transition. |
 
 #### Returns
 
@@ -208,13 +213,16 @@ ___
 
 #### Defined in
 
-src/lib/_hooks.ts:5
+[src/lib/_hooks.ts:13](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_hooks.ts#L13)
 
 ___
 
 ### onResume
 
 ▸ **onResume**<`T`\>(`callback`): `void`
+
+Attach a callback to the resume event in the component lifecycle, i.e. when
+the component that was paused becomes the first (top) element of the stack.
 
 #### Type parameters
 
@@ -224,9 +232,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `callback` | (`returnValue?`: `T`) => `unknown` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `callback` | (`returnValue?`: `T`) => `unknown` | a callback that will be invoked when a backward navigation event occurs causing this previously paused component to be resumed. If the callback returns a Promise, the navigation will wait for it to resolve before starting the transition. |
 
 #### Returns
 
@@ -234,7 +242,7 @@ ___
 
 #### Defined in
 
-src/lib/_hooks.ts:19
+[src/lib/_hooks.ts:36](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_hooks.ts#L36)
 
 ___
 
@@ -242,10 +250,13 @@ ___
 
 ▸ **useNavigation**(): [`NavigationUtils`](README.md#navigationutils)
 
+Return an object containing stores and functions that can be used to
+interact with the navigator.
+
 #### Returns
 
 [`NavigationUtils`](README.md#navigationutils)
 
 #### Defined in
 
-src/lib/_hooks.ts:33
+[src/lib/_hooks.ts:55](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_hooks.ts#L55)
