@@ -1,7 +1,6 @@
 <script lang="ts">
 	/* eslint "import/extensions": off */
 
-	import PQueue from 'p-queue';
 	import {navigatorContextKey} from './_stack-router';
 	import type {StackItem, StackNavigatorContext, TransitionFunctions} from './_types';
 
@@ -12,6 +11,7 @@
 	import type {SvelteComponentConstructor} from './_types';
 	import {isPortrait, modalTransitions, premadeTransitions} from './_premade-transitions';
 	import {sleep} from './_utils';
+	import {makeCommandQueue} from './_queue';
 
 	/**
 	 * Component that represents the bottom of the stack. It will
@@ -72,7 +72,7 @@
 	 */
 	export let swipeGestureMinDistance = 50;
 
-	const navigationQueue = new PQueue({concurrency: 1});
+	const navigationQueue = makeCommandQueue();
 
 	// Set to vertical when showing the modal
 	let swipeGestureDirection: 'vertical' | 'horizontal' = 'horizontal';
@@ -146,7 +146,7 @@
 		animate = true,
 		isModal = false
 	): Promise<void> {
-		await navigationQueue.add(async () => {
+		await navigationQueue.run(async () => {
 			if (!ref) {
 				const err = new Error('not mounted');
 				dispatch('error', err);
@@ -258,7 +258,7 @@
 
 	/** Return to the previous stack item by removing the currently active one, optionally passing a return value */
 	async function goBack(returnValue?: unknown, animate = true, duration?: number): Promise<void> {
-		await navigationQueue.add(async () => {
+		await navigationQueue.run(async () => {
 			if (!canGoBack()) {
 				const err = new Error(`cannot go back, stack size is ${$stack.length}`);
 				dispatch('error', err);
