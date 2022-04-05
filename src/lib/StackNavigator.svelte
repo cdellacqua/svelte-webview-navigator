@@ -131,14 +131,6 @@
 		unsubscribeFromTransitions = () => undefined as void;
 	}
 
-	/* async function navigate<TProps extends Record<string, unknown>>(
-		target: SvelteComponentConstructor<TProps>,
-		props: TProps,
-		animate?: boolean,
-		isModal?: boolean
-	): Promise<void>;
-	async function navigate(target: SvelteComponentConstructor): Promise<void>; */
-
 	/** Navigate to a target component optionally passing some props. */
 	async function navigate<TProps extends Record<string, unknown>>(
 		target: SvelteComponentConstructor<TProps>,
@@ -318,11 +310,6 @@
 		});
 	}
 
-	/* export async function openModal(component: SvelteComponentConstructor): Promise<void>;
-	export async function openModal<TProps extends Record<string, unknown>>(
-		component: SvelteComponentConstructor<TProps>,
-		props: TProps
-	): Promise<void>; */
 	async function openModal<TProps extends Record<string, unknown>>(
 		component: SvelteComponentConstructor<TProps>,
 		props: TProps | Record<string, unknown> = {}
