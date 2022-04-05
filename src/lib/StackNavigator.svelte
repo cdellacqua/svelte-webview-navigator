@@ -1,7 +1,7 @@
 <script lang="ts">
 	/* eslint "import/extensions": off */
 
-	import {navigatorContextKey} from './_stack-router';
+	import {navigatorContextKey} from './_stack-navigator';
 	import type {StackItem, StackNavigatorContext, TransitionFunctions} from './_types';
 
 	import {createEventDispatcher, onMount, setContext, tick} from 'svelte';

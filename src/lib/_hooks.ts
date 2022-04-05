@@ -1,5 +1,5 @@
 import {getContext} from 'svelte';
-import {navigatorContextKey} from './_stack-router.js';
+import {navigatorContextKey} from './_stack-navigator.js';
 import type {NavigationUtils, StackNavigatorContext} from './_types.js';
 
 /**
