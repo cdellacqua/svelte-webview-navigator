@@ -150,7 +150,11 @@
 			const oldFront = $stack[$stack.length - 1];
 			if (oldFront) {
 				for (const cb of oldFront.onPauseCallbacks) {
-					await cb();
+					try {
+						await cb();
+					} catch (err) {
+						dispatch('error', err);
+					}
 				}
 			}
 
@@ -287,7 +291,11 @@
 			const resumedBack = $stack[$stack.length - 2];
 			resumedBack.mountPoint.style.visibility = '';
 			for (const cb of resumedBack.onResumeCallbacks) {
-				await cb(returnValue);
+				try {
+					await cb(returnValue);
+				} catch (err) {
+					dispatch('error', err);
+				}
 			}
 
 			// Retrieve the current active stack item.
@@ -452,7 +460,9 @@
 							? ref.offsetWidth / swipeSpeedPixelPerMillisecond
 							: ref.offsetHeight / swipeSpeedPixelPerMillisecond
 					)
-				);
+				).catch(() => {
+					slideRatio.set(1, {easing: transitionEasing});
+				});
 			} else {
 				slideRatio.set(1, {easing: transitionEasing});
 			}
