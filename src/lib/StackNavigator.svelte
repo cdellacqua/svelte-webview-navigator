@@ -2,7 +2,7 @@
 	/* eslint "import/extensions": off */
 
 	import PQueue from 'p-queue';
-	import {routerContextKey} from './_stack-router';
+	import {navigatorContextKey} from './_stack-router';
 	import type {StackItem, StackNavigatorContext, TransitionFunctions} from './_types';
 
 	import {createEventDispatcher, onMount, setContext, tick} from 'svelte';
@@ -204,7 +204,7 @@
 
 			// Prepare the arrays in case
 			// the component will register some lifecycle callbacks.
-			routerContext.mountingItemLifecycleCallbacks = {
+			context.mountingItemLifecycleCallbacks = {
 				onPauseCallbacks: [],
 				onResumeCallbacks: []
 			};
@@ -216,7 +216,7 @@
 			const componentInstance = new (target as SvelteComponentConstructor)({
 				target: mountPoint,
 				props,
-				context: new Map<string, StackNavigatorContext>([[routerContextKey, routerContext]])
+				context: new Map<string, StackNavigatorContext>([[navigatorContextKey, context]])
 			});
 
 			// Wait a tick so that Svelte has time to do its things.
@@ -232,7 +232,7 @@
 					mountPoint,
 					overlay,
 					transitions: isModal ? modalTransitions : transitions,
-					...(routerContext.mountingItemLifecycleCallbacks || {
+					...(context.mountingItemLifecycleCallbacks || {
 						onPauseCallbacks: [],
 						onResumeCallbacks: []
 					})
@@ -240,7 +240,7 @@
 			]);
 
 			// Remove the lifecycle arrays reference.
-			routerContext.mountingItemLifecycleCallbacks = null;
+			context.mountingItemLifecycleCallbacks = null;
 
 			if (animate) {
 				await Promise.race([slideRatio.set(0, {duration: 0}), sleep(0)]);
@@ -331,7 +331,7 @@
 		await navigate(component as SvelteComponentConstructor, props, true, true);
 	}
 
-	export const routerContext: StackNavigatorContext = {
+	export const context: StackNavigatorContext = {
 		navigate,
 		openModal,
 		goBack,
@@ -346,10 +346,10 @@
 	};
 
 	function canGoBack(): boolean {
-		return get(routerContext.canGoBack);
+		return get(context.canGoBack);
 	}
 
-	setContext(routerContextKey, routerContext);
+	setContext(navigatorContextKey, context);
 
 	onMount(() => {
 		if (!ref) {

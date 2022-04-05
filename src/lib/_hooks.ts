@@ -1,5 +1,5 @@
 import {getContext} from 'svelte';
-import {routerContextKey} from './_stack-router.js';
+import {navigatorContextKey} from './_stack-router.js';
 import type {NavigationUtils, StackNavigatorContext} from './_types.js';
 
 /**
@@ -12,7 +12,7 @@ import type {NavigationUtils, StackNavigatorContext} from './_types.js';
  */
 export function onPause(callback: () => unknown | Promise<unknown>): void {
 	const {mountingItemLifecycleCallbacks, dispatchError} =
-		getContext<StackNavigatorContext>(routerContextKey);
+		getContext<StackNavigatorContext>(navigatorContextKey);
 	if (!mountingItemLifecycleCallbacks) {
 		dispatchError(
 			new Error(
@@ -35,7 +35,7 @@ export function onPause(callback: () => unknown | Promise<unknown>): void {
  */
 export function onResume<T>(callback: (returnValue?: T) => unknown | Promise<unknown>): void {
 	const {mountingItemLifecycleCallbacks, dispatchError} =
-		getContext<StackNavigatorContext>(routerContextKey);
+		getContext<StackNavigatorContext>(navigatorContextKey);
 	if (!mountingItemLifecycleCallbacks) {
 		dispatchError(
 			new Error(
@@ -54,6 +54,6 @@ export function onResume<T>(callback: (returnValue?: T) => unknown | Promise<unk
  */
 export function useNavigation(): NavigationUtils {
 	const {navigate, goBack, canGoBack, navigating, swiping, openModal} =
-		getContext<StackNavigatorContext>(routerContextKey);
+		getContext<StackNavigatorContext>(navigatorContextKey);
 	return {navigate, goBack, canGoBack, navigating, swiping, openModal};
 }

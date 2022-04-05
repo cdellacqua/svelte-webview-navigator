@@ -144,21 +144,28 @@ the `@capacitor/app` plugin (details in the [docs here](https://capacitorjs.com/
 	import type {StackNavigatorContext} from 'svelte-webview-navigator';
 	import {StackNavigator} from 'svelte-webview-navigator';
 	import Home from './Home.svelte';
+	import {onMount} from 'svelte';
 
-	let routerContext: StackNavigatorContext | undefined;
-	App.addListener('backButton', () => {
-		if (!routerContext) {
+	let navigatorContext: StackNavigatorContext | undefined;
+	function handleBackButton() {
+		if (!navigatorContext) {
 			return;
 		}
-		if (get(routerContext.canGoBack)) {
-			routerContext.goBack();
+		if (get(navigatorContext.canGoBack)) {
+			navigatorContext.goBack();
 		} else {
 			App.exitApp();
 		}
+	}
+	onMount(() => {
+		const listener = App.addListener('backButton', handleBackButton);
+		return () => {
+			listener.then((l) => l.remove());
+		};
 	});
 </script>
 
-<StackNavigator main={Home} bind:routerContext />
+<StackNavigator main={Home} bind:context={navigatorContext} />
 ```
 
 ## Customizations
