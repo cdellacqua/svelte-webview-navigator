@@ -150,7 +150,6 @@ the `@capacitor/app` plugin (details in the [docs here](https://capacitorjs.com/
 		if (!routerContext) {
 			return;
 		}
-		on;
 		if (get(routerContext.canGoBack)) {
 			routerContext.goBack();
 		} else {
