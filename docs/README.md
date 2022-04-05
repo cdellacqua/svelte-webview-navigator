@@ -16,7 +16,10 @@ svelte-webview-navigator
 
 ### Type aliases
 
+- [LifecycleCallbacks](README.md#lifecyclecallbacks)
 - [NavigationUtils](README.md#navigationutils)
+- [StackItem](README.md#stackitem)
+- [StackNavigatorContext](README.md#stacknavigatorcontext)
 - [SvelteComponentConstructor](README.md#sveltecomponentconstructor)
 - [TransitionFunction](README.md#transitionfunction)
 - [TransitionFunctions](README.md#transitionfunctions)
@@ -52,6 +55,23 @@ Renames and re-exports [StackNavigator](classes/StackNavigator.md)
 
 ## Type aliases
 
+### LifecycleCallbacks
+
+Ƭ **LifecycleCallbacks**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `onPauseCallbacks` | () => `unknown` \| `Promise`<`unknown`\>[] |
+| `onResumeCallbacks` | (`returnValue?`: `unknown`) => `unknown` \| `Promise`<`unknown`\>[] |
+
+#### Defined in
+
+[src/lib/_types.ts:12](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_types.ts#L12)
+
+___
+
 ### NavigationUtils
 
 Ƭ **NavigationUtils**: `Object`
@@ -70,6 +90,26 @@ Renames and re-exports [StackNavigator](classes/StackNavigator.md)
 #### Defined in
 
 [src/lib/_types.ts:33](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_types.ts#L33)
+
+___
+
+### StackItem
+
+Ƭ **StackItem**: { `componentInstance`: [`StackNavigator`](classes/StackNavigator.md) ; `mountPoint`: `HTMLDivElement` ; `overlay`: `HTMLDivElement` ; `ref`: `HTMLDivElement` ; `transitions`: [`TransitionFunctions`](README.md#transitionfunctions)  } & [`LifecycleCallbacks`](README.md#lifecyclecallbacks)
+
+#### Defined in
+
+[src/lib/_types.ts:17](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_types.ts#L17)
+
+___
+
+### StackNavigatorContext
+
+Ƭ **StackNavigatorContext**: [`NavigationUtils`](README.md#navigationutils) & { `mountingItemLifecycleCallbacks`: [`LifecycleCallbacks`](README.md#lifecyclecallbacks) \| ``null`` ; `navigationStores`: `Readable`<[`number`, `boolean`, `boolean`]\> ; `stack`: `Writable`<[`StackItem`](README.md#stackitem)[]\> ; `dispatchError`: (`detail`: `Error`) => `unknown` ; `unsubscribeFromTransitions`: () => `void`  }
+
+#### Defined in
+
+[src/lib/_types.ts:80](https://github.com/cdellacqua/svelte-webview-navigator/blob/main/src/lib/_types.ts#L80)
 
 ___
 

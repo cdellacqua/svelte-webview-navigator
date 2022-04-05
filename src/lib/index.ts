@@ -9,5 +9,8 @@ export type {
 	NavigationUtils,
 	TransitionFunction,
 	TransitionFunctions,
-	SvelteComponentConstructor
+	SvelteComponentConstructor,
+	StackNavigatorContext,
+	StackItem,
+	LifecycleCallbacks
 } from './_types.js';
